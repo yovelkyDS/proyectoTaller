@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chatBody.appendChild(errorMessage);
             chatBody.scrollTop = chatBody.scrollHeight;
             console.error("Error en el fetch:", error);
+
         }
     });
 });

@@ -58,3 +58,4 @@ while True:
     
     # Se muestra la respuesta en la terminal.
     print(f"ChatGPT: {respuesta}")"""
+
