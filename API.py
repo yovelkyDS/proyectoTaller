@@ -35,13 +35,13 @@ def chat_con_php(mensaje:str)->str:
         # Se añade la respuesta del asistente al historial de la conversación.
         conversacion.append({"role": "assistant", "content": mensaje_respuesta})
         
-        return mensaje_respuesta  # Se retorna el mensaje de respuesta del asistente.
+        return mensaje_respuesta # Se retorna el mensaje de respuesta del asistente.
     
     except Exception as e:
         # En caso de error (por ejemplo, problemas de conexión), se devuelve un mensaje de error.
         return f"Error al conectar con el servidor: {e}"
 
-# Mensaje de bienvenida para el usuario.
+"""# Mensaje de bienvenida para el usuario.
 print("Bienvenido al chat con ChatGPT (vía PHP). Escribe 'salir' para terminar.")
 
 # Ciclo de conversación donde el usuario puede interactuar con el asistente hasta que escriba 'salir'.
@@ -57,4 +57,4 @@ while True:
     respuesta = chat_con_php(mensaje)
     
     # Se muestra la respuesta en la terminal.
-    print(f"ChatGPT: {respuesta}")
+    print(f"ChatGPT: {respuesta}")"""
