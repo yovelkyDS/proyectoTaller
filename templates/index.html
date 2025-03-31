@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"> <!-- Iconos de Bootstrap -->
+    <link rel="stylesheet" href="static/css/styles.css"> <!-- Enlace a los estilos personalizados -->
+</head>
+<body>
+
+<!-- Fondo Animado -->
+<canvas id="c"></canvas>
+
+<div class="container-fluid d-flex align-items-center vh-100">
+    <!-- Menú Lateral Izquierdo -->
+    <div class="col-2 sidebar-menu d-none d-lg-block"> <!-- Oculta en pantallas pequeñas -->
+        <div class="menu-title">
+            <i class="menu-icon bi bi-info-circle"></i>
+            Información Rápida
+        </div>
+        <ul class="menu-list">
+            <li><i class="menu-icon bi bi-person-circle"></i> Bienvenido, Usuario</li>
+            <li><i class="menu-icon bi bi-bookmark-heart"></i> Misión y Visión</li>
+            <li><i class="menu-icon bi bi-lightbulb"></i> Consejos de Uso</li>
+            <li><i class="menu-icon bi bi-clock"></i> Horarios de Soporte</li>
+        </ul>
+    </div>
+
+    <!-- Contenedor del Chatbot -->
+    <div class="col-12 col-lg-7 container">
+        <div class="chat-header d-flex align-items-center">
+            <img src="static/img/robot.webp" alt="Chatbot Icon" class="chat-icon me-2"> <!-- Imagen del Bot -->
+            <span>Chatbot Asistente</span>
+        </div>
+        <div class="chat-body border border-secondary border-1 border-top-0 border-bottom-0" id="chatBody">
+            <div class="chat-message bot">
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><ellipse cx="24" cy="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" rx="9.636" ry="20.5"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M28.818 15.655c9.805 5.66 15.597 13.986 12.936 18.595s-12.767 3.756-22.572-1.905S3.586 18.36 6.247 13.75c1.064-1.843 3.318-2.812 6.267-2.95c4.427-.208 10.42 1.457 16.304 4.855"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M28.818 32.345c-9.805 5.661-19.91 6.514-22.571 1.905s3.13-12.934 12.935-18.595c5.662-3.27 11.424-4.935 15.795-4.871c3.198.046 5.652 1.018 6.777 2.966c2.66 4.609-3.13 12.934-12.936 18.595M20.43 21.251h7.14M19.314 24h9.372m-6.745 2.749h4.118"/></svg></span> ¡Hola! ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+        <!-- Formulario de chat -->
+        <form id="chatForm" class="chat-footer border border-secondary border-1 border-top-0 ">
+            <input type="text" id="chatInput" placeholder="Escribe tu mensaje aquí" name="message" required>
+            <button type="submit" id="sendButton">Enviar</button>
+        </form>
+    </div>
+
+    <!-- Menú Lateral Derecho -->
+    <div class="col-2 sidebar-menu d-none d-lg-block"> <!-- Oculta en pantallas pequeñas -->
+        <div class="menu-title">
+            <i class="menu-icon bi bi-graph-up"></i>
+            Estadísticas de Usuario
+        </div>
+        <ul class="menu-list">
+            <li><i class="menu-icon bi bi-bar-chart"></i> Interacciones: 23</li>
+            <li><i class="menu-icon bi bi-clock-history"></i> Última conexión: Hoy</li>
+            <li><i class="menu-icon bi bi-envelope"></i> Total de mensajes: 100</li>
+            <li><i class="menu-icon bi bi-book"></i> Enlaces de Interés</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Scripts para la Animación y el Chat -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="static/js/chat.js"></script> <!-- Script para el chat -->
+<script src="static/js/script.js"></script> <!-- Script para animación y funciones -->
+</body>
+</html>

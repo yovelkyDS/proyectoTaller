@@ -2,7 +2,7 @@
 from API import chat_con_php
 
 def openConversation(nombre:str)->list:
-    nameF = f"{nombre}.txt"
+    nameF = f"{nombre}_conversation.txt"
     with open(nameF, "a+") as file:
         file.seek(0)
         content = file.read()
@@ -14,7 +14,7 @@ def openConversation(nombre:str)->list:
 try: 
     def login():
         pass
-    def answers(msg:str) -> str:
+    def register(msg:str) -> str:
         """Funcion que registra la conversacion del chatbot con el usuario
 
 
@@ -26,9 +26,12 @@ try:
         """
         name = login()
         answer = chat_con_php(msg)
-        fileN = f"{name}.txt"
+        fileN = f"{name}_conversation.txt"
         with open(fileN, "a") as f:
             f.write()
-
 except:
     print("Error!")
+
+def chat(message:str):
+    res = chat_con_php(message)
+    
