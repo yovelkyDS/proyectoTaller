@@ -12,16 +12,6 @@ body {
     overflow: hidden;
 }
 
-/* Fondo Animado */
-canvas#c {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-}
-
 /* Configuración General de la Interfaz */
 .container-fluid {
     position: relative;
@@ -83,13 +73,6 @@ canvas#c {
     transform: translateX(5px);
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
 }
-
-/* Estilo de los Iconos */
-.menu-icon {
-    font-size: 1.3em;
-    color: #66fcf1;
-}
-
 /* Chatbot Container */
 .chat-container {
     background-color: #1e1e1f;
@@ -177,7 +160,6 @@ canvas#c {
 }
 
 
-
 /* Efecto de brillo al pasar sobre los mensajes */
 .chat-message::before {
     content: '';
@@ -249,34 +231,6 @@ canvas#c {
     border-radius: 3px;
 }
 
-/* Estilos para tablas generadas en el chat */
-.chat-body table {
-    width: 100%; /* Asegura que la tabla use todo el ancho disponible */
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: #2c2c2e;
-}
-.chat-body th, .chat-body td {
-    border: 1px solid #3a3a3c;
-    padding: 10px;
-    text-align: left;
-    color: #e0e0e0;
-}
-/* Estilos mejorados para el encabezado de las tablas en el chat */
-.chat-body th {
-    background-color: #3a3a3c;
-    font-weight: bold;
-    padding: 12px 8px; /* Más espacio vertical y horizontal */
-    text-align: center; /* Centra el texto */
-    word-wrap: break-word; /* Permite que el texto se ajuste en varias líneas */
-    white-space: normal; /* Asegura que el texto se divida en líneas */
-    font-size: 0.9em; /* Reduce el tamaño de fuente para evitar saturación */
-    line-height: 1.4; /* Aumenta el espaciado entre líneas para mejor legibilidad */
-}
-.chat-body td {
-    background-color: #1a1a1a;
-}
-/* Añadir un pequeño efecto de hover para celdas */
-.chat-body td:hover {
-    background-color: #333;
+.userDisplay {
+    color: black;
 }

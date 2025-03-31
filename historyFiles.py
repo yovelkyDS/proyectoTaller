@@ -33,5 +33,6 @@ except:
     print("Error!")
 
 def chat(message:str):
+    print(message, 2)
     res = chat_con_php(message)
-    
+    return res

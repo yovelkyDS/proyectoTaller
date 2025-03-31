@@ -21,9 +21,11 @@ def chats():
     data = request.get_json()
     user_message = data.get('message', '')
     try:
+        
         res = chat(user_message)
-        print(" - - - - -- - - - - - - - -- - - - -- - - -")
-        print(res)
+        print(res, 1)
+        #print(" - - - - -- - - - - - - - -- - - - -- - - -")
+        #print(res)
         res_text_html = process_response(res)  # Solo la parte de texto
         return jsonify({'text': res_text_html})
     except Exception as e:
