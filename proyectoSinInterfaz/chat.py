@@ -4,23 +4,61 @@ import colores as c
 from usuarios import usuarios
 
 
-def imprimirMensaje(msg:str,orientación:str='derecha',porcentaje:int=80)->None:
-    lineas=[]
+def imprimirMensaje(msg: str, rol: str = 'bot' or 'usuario', orientación: str = 'derecha', porcentaje: int = 80) -> None:
+    lineas = []
     terminal_size = shutil.get_terminal_size()
-    anchoLinea=int(terminal_size.columns*porcentaje/100)
-    while len(msg)>anchoLinea:
-        if orientación=="derecha":
-            lineas.append(msg[:anchoLinea].ljust(terminal_size.columns))
+    anchoLinea = int(terminal_size.columns * porcentaje / 100)
+
+    # Determinar alineación y estilo por rol
+    if rol.lower() == 'usuario':
+        orientación = 'derecha'
+        color = c.CIAN
+        nombre = f"Usuario:{usuarios} "
+    elif rol.lower() == 'sistema':
+        orientación = 'centro'
+        color = c.AZUL
+        nombre = "sistema:"
+    else:
+        orientación = 'izquierda'
+        color = c.AMARILLO
+        nombre = "Bot:"
+
+    # Mostrar quién habla
+    if orientación == 'centro':
+        print(color + nombre.center(terminal_size.columns) + c.RESET)
+    elif orientación == 'derecha':
+        print(color + nombre.rjust(terminal_size.columns) + c.RESET)
+    else:
+        print(color + nombre.ljust(terminal_size.columns) + c.RESET)
+
+    # Dividir mensaje por palabras
+    palabras = msg.split()
+    linea_actual = ""
+
+    for palabra in palabras:
+        if len(linea_actual + ' ' + palabra) <= anchoLinea:
+            linea_actual += (' ' if linea_actual else '') + palabra
         else:
-            lineas.append(msg[:anchoLinea].rjust(terminal_size.columns))
-        msg=msg[anchoLinea:]
-    if len(msg)>0:
-        if orientación=="derecha":
-            lineas.append(msg.ljust(terminal_size.columns))
+            if orientación == 'derecha':
+                lineas.append(linea_actual.rjust(terminal_size.columns))
+            elif orientación == 'centro':
+                lineas.append(linea_actual.center(terminal_size.columns))
+            else:
+                lineas.append(linea_actual.ljust(terminal_size.columns))
+            linea_actual = palabra
+
+    # Última línea
+    if linea_actual:
+        if orientación == 'derecha':
+            lineas.append(linea_actual.rjust(terminal_size.columns))
+        elif orientación == 'centro':
+            lineas.append(linea_actual.center(terminal_size.columns))
         else:
-            lineas.append(msg.rjust(terminal_size.columns))
+            lineas.append(linea_actual.ljust(terminal_size.columns))
+
+    # Imprimir líneas con color
     for linea in lineas:
-        print(linea)
+        print(color + linea + c.RESET)
 
 mensaje="En la era digital, el conocimiento está al alcance de un clic. La educación, el trabajo y el entretenimiento han cambiado radicalmente gracias a la tecnología. Internet permite la conexión instantánea entre personas de distintas partes del mundo, rompiendo barreras geográficas y culturales. La inteligencia artificial y la automatización están revolucionando industrias, aumentando la eficiencia y optimizando recursos. La clave es adaptarse y aprovechar estas herramientas para el crecimiento personal y profesional."
 print(c.CIAN)
