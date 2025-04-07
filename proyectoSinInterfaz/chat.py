@@ -66,7 +66,7 @@ print(c.AMARILLO)
 imprimirMensaje(porcentaje=80, orientación='derecha',msg=mensaje)
 print(c.RESET)
 
-
+"""
 print("Ejemplo de alineamiento de texto... espero 10 segundos", )
 time.sleep(10)
 
