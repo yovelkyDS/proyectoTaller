@@ -1,18 +1,21 @@
 #26032025 Yovelky Delgado // Andres Valerio
 from API import chat_con_php 
-import ast, os
+import ast, os, json
 
-def openConversation(name:str)->bool:
+def openConversation(name:str)->list:
     nameF = f"{name}_conversation.txt"
-    with open(nameF, "a+") as file:
-        file.seek(0)
-        content = file.readlines()
-        if content:
-            return (content)
-        else:
-            return ([])
+    historial = []
+    if os.path.exists(nameF):
+        with open(nameF, "r", encoding="utf-8") as f:
+            try:
+                historial = json.load(f)
+                return historial
+            except Exception as e:
+                print(f"Error al leer el archivo: {e}")
+                return []
+    return []
         
-def register(msg:str, name:str,) -> str:
+def register(msg:list, name:str,) -> str:
         """Funcion que registra la conversacion del chatbot con el usuario
         Args:
             msg (str): mensaje del usuario
@@ -21,10 +24,12 @@ def register(msg:str, name:str,) -> str:
             str: respuesta dada por el chatbot
         """
         fileN = f"{name}_conversation.txt"
-        with open(fileN, "a", encoding="utf-8") as f:
-            f.write(f"{msg}\n")
+        historial = openConversation(name)
+        historial.append(msg)
+        with open(fileN, "w", encoding="utf-8") as f:
+            json.dump(historial, f)
 
-def chat(message:str, nombre:str)-> str:
+def chat(message:str)-> str:
     """Trae la informacion que proporciona el usuario, registra y devuelve la respuesta del chatbot
 
     Args:
@@ -34,10 +39,8 @@ def chat(message:str, nombre:str)-> str:
         str: respuesta del chatbot
     """
     answer = chat_con_php(message)
-    conversacion = []
-    conversacion.append(["Usuario:", message, "Chatbot", answer])
-    register(conversacion, nombre)
-    return answer
+    conversacion = ["Usuario:", message, "Chatbot", answer]
+    return answer, conversacion
 
 def lookForWord(wordKey:str, nombre:str)->list:
     """Busca en el historial de conversaciones de un usuario utilizando una palabra clave
@@ -52,25 +55,20 @@ def lookForWord(wordKey:str, nombre:str)->list:
     archivo = f"{nombre}_conversation.txt"
     if not os.path.exists(archivo):
         print("El usuario no tiene conversaciones guardadas.")
-        return
-
-    with open(archivo, "r", encoding="utf-8") as f:
-        contenido = f.read()
-        try:
-            historial = ast.literal_eval(contenido)
-        except Exception as e:
-            print("Error al leer el archivo:", e)
-            return
-
-    palabra_clave = wordKey.lower()
+        return []
+        
+    palabraClave = wordKey.lower()
     resultados = []
-
-    for i, conversacion in enumerate(historial, 1):
-        for j in range(1, len(conversacion), 2):  # recorremos solo los mensajes
-            mensaje = conversacion[j].lower()
-            if palabra_clave in mensaje:
-                resultados.append((i, conversacion[j]))
-                break  # solo una coincidencia por conversación
+    try:
+        with open(archivo, "r", encoding="utf-8") as f:
+            historial = json.load(f)
+            for i, conversacion in enumerate(historial, 1):
+                for mensaje in conversacion:
+                    if isinstance(mensaje, str) and palabraClave in mensaje.lower():
+                        resultados.append((i, conversacion))
+                        break
+    except Exception as e:
+        print(f"Error leyendo conversación {i}: {e}")
     return (resultados)
 
 def abstractConversation(conversacion:list)->str:

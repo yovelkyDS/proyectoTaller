@@ -1,7 +1,6 @@
 import time
 import shutil
 import colores as c
-from usuarios import usuarios
 
 
 def imprimirMensaje(msg:str,orientación:str='derecha',porcentaje:int=80)->None:
@@ -29,7 +28,7 @@ print(c.AMARILLO)
 imprimirMensaje(porcentaje=80, orientación='derecha',msg=mensaje)
 print(c.RESET)
 
-
+"""
 print("Ejemplo de alineamiento de texto... espero 10 segundos", )
 time.sleep(10)
 
@@ -86,4 +85,4 @@ while True:
 while True:
     terminal_size = shutil.get_terminal_size()
     print('\033c',f"La \033[31mterminal\033[30m tiene {terminal_size.lines} líneas y {terminal_size.columns} columnas.")
-    time.sleep(1)
+    time.sleep(1)"""
