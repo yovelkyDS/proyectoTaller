@@ -1,10 +1,9 @@
 import time
 import shutil
 import colores as c
-from usuarios import usuarios
 
 
-def imprimirMensaje(msg: str, rol: str = 'bot' or 'usuario', orientación: str = 'derecha', porcentaje: int = 80) -> None:
+def imprimirMensaje(msg: str, rol: str = 'bot' or 'usuario' or 'sistema', orientación: str = 'derecha', porcentaje: int = 80) -> None:
     lineas = []
     terminal_size = shutil.get_terminal_size()
     anchoLinea = int(terminal_size.columns * porcentaje / 100)
@@ -13,11 +12,11 @@ def imprimirMensaje(msg: str, rol: str = 'bot' or 'usuario', orientación: str =
     if rol.lower() == 'usuario':
         orientación = 'derecha'
         color = c.CIAN
-        nombre = f"Usuario:{usuarios} "
+        nombre = f"Usuario:{nombre} "
     elif rol.lower() == 'sistema':
         orientación = 'centro'
         color = c.AZUL
-        nombre = "sistema:"
+        nombre = "Sistema:"
     else:
         orientación = 'izquierda'
         color = c.AMARILLO
@@ -57,9 +56,9 @@ def imprimirMensaje(msg: str, rol: str = 'bot' or 'usuario', orientación: str =
             lineas.append(linea_actual.ljust(terminal_size.columns))
 
     # Imprimir líneas con color
-    for linea in lineas:
+    for linea in lineas:        
         print(color + linea + c.RESET)
-
+        
 mensaje="En la era digital, el conocimiento está al alcance de un clic. La educación, el trabajo y el entretenimiento han cambiado radicalmente gracias a la tecnología. Internet permite la conexión instantánea entre personas de distintas partes del mundo, rompiendo barreras geográficas y culturales. La inteligencia artificial y la automatización están revolucionando industrias, aumentando la eficiencia y optimizando recursos. La clave es adaptarse y aprovechar estas herramientas para el crecimiento personal y profesional."
 print(c.CIAN)
 imprimirMensaje(porcentaje=60, orientación='izquierda',msg=mensaje)
@@ -125,3 +124,9 @@ while True:
     terminal_size = shutil.get_terminal_size()
     print('\033c',f"La \033[31mterminal\033[30m tiene {terminal_size.lines} líneas y {terminal_size.columns} columnas.")
     time.sleep(1)
+
+
+def centarTexto(s:str)->str:
+    terminal_size = shutil.get_terminal_size()
+    return s.center(terminal_size.columns)
+

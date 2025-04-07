@@ -1,5 +1,7 @@
 import shutil
 from files import openConversation, chat, lookForWord, abstractConversation
+from chat import imprimirMensaje as m
+import colores as c
 
 def centerText(txt:str)->str:
     terminal = shutil.get_terminal_size()
@@ -11,14 +13,16 @@ def login()->str:
     nombre = str(input("Digite su nombre de usuario: "))
     return nombre
 
-def chatMsg(n:str):
+def chatMsg(n:str) -> bool:
     print(centerText("ChatBot"))
     question = str(input("¡Hola! En que puedo ayudarte?\nTu: "))
     if question != "Salir":
         answer = chat(question, n)
         print(f"Respuesta: {answer}")
+        return True
     else:
-        breakpoint
+        print ("Saliendo del chatbot...")
+        return False
 
 def buscarPalabra(n:str):
     palabraClave = str(input("Digite la palabra a buscar: "))
@@ -50,14 +54,17 @@ def menu():
         opcion = str(input("Seleccione una opcion:"))
         match opcion:
             case "1":
-                while True:
-                    chatMsg(name)
+                seguir = True
+                while seguir:
+                   seguir= chatMsg(name)
             case "2":
                 pass
             case "3":
                 while True:
                     buscarPalabra(name)
             case "4":
-                pass
+                print("¡Gracias por usar nuestro programa!")
+                break
+   
 if __name__ == "__main__":
     menu()
