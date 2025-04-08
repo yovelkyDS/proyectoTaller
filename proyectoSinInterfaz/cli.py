@@ -1,6 +1,6 @@
 import shutil, textwrap
 from files import openConversation, chat, lookForWord, abstractConversation, register, contextConversation
-import sys
+import sys, os
 import colores as c
 
 def centerText(txt:str)->str:
@@ -72,14 +72,13 @@ def chatMsg(n:str, conversation: list = [])-> None:
     Returns:
         _type_: no posee un retorno 
     """
-    #conversation = []
     print(centerText("ChatBot"))
     imprimirMensaje("¡Hola! En que puedo ayudarte?", 'izquierda')
     while True:
         question = str(input(f"{n}: "))
         if question.lower() == "salir":
             register(conversation, n)
-            print ("\nRegresando al menu principal...")
+            print ("\nRegresando al menu...")
             return ("salir")
         answer, update = chat(question)
         conversation.extend(update)
@@ -195,6 +194,7 @@ def menu():
                         break
             case "2":
                 while True:
+                    history = openConversation(name)
                     s = cargarHistorial(history, name)
                     if s == "salir":
                         break
