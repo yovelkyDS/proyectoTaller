@@ -2,8 +2,9 @@
 from API import chat_con_php 
 import ast, os, json
 
+
 def openConversation(name:str)->list:
-    nameF = f"{name}_conversation.txt"
+    nameF = f"{name.lower()}_conversation.txt"
     historial = []
     if os.path.exists(nameF):
         with open(nameF, "r", encoding="utf-8") as f:
@@ -14,7 +15,7 @@ def openConversation(name:str)->list:
                 print(f"Error al leer el archivo: {e}")
                 return []
     return []
-        
+
 def register(msg:list, name:str,) -> str:
         """Funcion que registra la conversacion del chatbot con el usuario
         Args:

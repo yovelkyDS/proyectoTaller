@@ -128,5 +128,5 @@ while True:
 
 def centarTexto(s:str)->str:
     terminal_size = shutil.get_terminal_size()
-    return s.center(terminal_size.columns)
+    return s.center(terminal_size.columns)"""
 

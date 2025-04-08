@@ -41,7 +41,7 @@ def imprimirMensaje(msg: str, orientacion: str = 'derecha', porcentaje: int = 80
 
 def login()->str:
     print(centerText("ChatBot"))
-    nombre = input("Digite su nombre de usuario: ")
+    nombre = input("Escriba su nombre de usuario, incluyendo la primer letra de su apellido: ")
     return nombre
 
 def chatMsg(n:str):
@@ -88,7 +88,7 @@ def buscarPalabra(n:str):
 
 def menu():
     name = login()
-    history = openConversation(name)
+    history = openConversation(name.lower())
     while True:
         print("Bienvenido al chatbot\nOpciones\n\n1.Nueva Conversacion")
         print("2.Ver historial de conversaciones\n3.Buscar por palabra")
@@ -97,15 +97,15 @@ def menu():
         match opcion:
             case "1":
                 while True:
-                    s = chatMsg(name)
-                    if s == "salir":
+                    s= chatMsg(name.lower())
+                    if s.lower() == "salir":
                         break
             case "2":
                 pass
             case "3":
                 while True:
-                    s = buscarPalabra(name)
-                    if s == "salir":
+                    s = buscarPalabra(name.lower())
+                    if s.lower() == "salir":
                         break
             case "4":
                 exit()
