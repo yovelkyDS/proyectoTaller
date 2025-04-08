@@ -61,10 +61,10 @@ def login()->str:
         str: dato ingresado por el usuario
     """
     print(centerText("ChatBot"))
-    nombre = input("Digite su nombre de usuario: ")
+    nombre = input("Escriba su nombre, incluyendo la primer letra de su apellido: ")
     return nombre
 
-def chatMsg(n:str)-> None:
+def chatMsg(n:str, conversation: list = [])-> None:
     """permite al usuario establecer una conversacion con el chatbot 
 
     Args:
@@ -73,7 +73,7 @@ def chatMsg(n:str)-> None:
     Returns:
         _type_: no posee un retorno 
     """
-    conversation = []
+    #conversation = []
     print(centerText("ChatBot"))
     imprimirMensaje("¡Hola! En que puedo ayudarte?", 'izquierda')
     while True:
@@ -136,14 +136,13 @@ def resumirConversacion(num:int, historial:list)-> None:
             cont += 1
 
 def continuarConversacion(nume:int, h:list, n:str)-> None:
-    print(1)
     cont = 1
     for e in h:
         if cont == nume:
             contextConversation(e)
-        else:
-            cont+=1
-    chatMsg(n)
+            chatMsg(n, e)
+            break
+        cont += 1
 
 def cargarHistorial(h:list, nombre:str)-> None:
     """Muestra el historial guardado de conversaciones entre el usuario y el chatbot, y permite al usuario continuar con una conversacion o ver el resumen de la misma 
@@ -168,7 +167,7 @@ def cargarHistorial(h:list, nombre:str)-> None:
             numC = int(input("Digite el numero de la conversacion con la que desea continuar: "))
             continuarConversacion(numC, h, nombre)
         case "3":
-            menu()
+            return("salir")
 
 def menu():
     """menu principal del sistema, le muestra al usuario las principales funciones que posee el sistema y le permite ingresar a los submenus de las mismas o bien,
@@ -188,7 +187,10 @@ def menu():
                     if s == "salir":
                         break
             case "2":
-                cargarHistorial(history, name)
+                while True:
+                    s = cargarHistorial(history, name)
+                    if s == "salir":
+                        break
             case "3":
                 while True:
                     s = buscarPalabra(name)
