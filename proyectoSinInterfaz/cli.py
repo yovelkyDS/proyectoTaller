@@ -1,5 +1,5 @@
 import shutil, textwrap
-from files import openConversation, chat, lookForWord, abstractConversation, register
+from files import openConversation, chat, lookForWord, abstractConversation, register, contextConversation
 import sys
 
 def centerText(txt:str)->str:
@@ -96,6 +96,14 @@ def resumirConversacion(num:int, historial:list):
         else:
             cont += 1
 
+def continuarConversacion(nume:int, h:list):
+    cont = 1
+    for e in h:
+        if cont == nume:
+            contextConversation(e)
+        else:
+            cont+=1
+
 def cargarHistorial(h:list):
     h.reverse()
     conta=1
@@ -110,9 +118,10 @@ def cargarHistorial(h:list):
             numC = int(input("Digite el numero de la conversacion que desea ver: "))
             resumirConversacion(numC, h)
         case "2":
-            pass
+            numC = int(input("Digite el numero de la conversacion con la que desea continuar: "))
+            continuarConversacion(numC, h)
         case "3":
-            pass
+            menu()
 
 def menu():
     name = login()
