@@ -2,9 +2,16 @@
 from API import chat_con_php 
 import os, json
 
-
 def openConversation(name:str)->list:
-    nameF = f"{name.lower()}_conversation.txt"
+    """abre, si existe, el archivo de conversaciones del usuario, o bien, le cree un archivo de conversaciones
+
+    Args:
+        name (str): nombre del usuario para crear el archivo
+
+    Returns:
+        list: si el archivo ya contenia datos devuelve los mismos
+    """
+    nameF = f"{name.lower()}_conversaciones.txt"
     historial = []
     if os.path.exists(nameF):
         with open(nameF, "r", encoding="utf-8") as f:
@@ -15,7 +22,7 @@ def openConversation(name:str)->list:
                 print(f"Error al leer el archivo: {e}")
                 return []
     return []
-
+        
 def register(msg:list, name:str,) -> str:
         """Funcion que registra la conversacion del chatbot con el usuario
         Args:
@@ -24,9 +31,10 @@ def register(msg:list, name:str,) -> str:
         Returns:
             str: respuesta dada por el chatbot
         """
-        fileN = f"{name}_conversation.txt"
+        fileN = f"{name}_conversaciones.txt"
         historial = openConversation(name)
-        historial.append(msg)
+        if msg not in historial:
+            historial.append(msg)
         with open(fileN, "w", encoding="utf-8") as f:
             json.dump(historial, f)
 
@@ -73,6 +81,14 @@ def lookForWord(wordKey:str, nombre:str)->list:
     return (resultados)
 
 def abstractConversation(conversacion:list)->str:
+    """genera un resumen de una conversacion con ayuda del chatbot
+
+    Args:
+        conversacion (list): conversacion a resumir 
+
+    Returns:
+        str: resumen generado por el chatbot 
+    """
     abstract = chat_con_php(f"Haz un resumen de maximo 50 palabras de la siguiente conversacion: {conversacion}")
     return abstract
 

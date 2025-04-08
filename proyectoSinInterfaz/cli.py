@@ -1,6 +1,7 @@
 import shutil, textwrap
 from files import openConversation, chat, lookForWord, abstractConversation, register, contextConversation
 import sys
+import colores as c
 
 def centerText(txt:str)->str:
     """Funcion para mejorar la estetica del programa 
@@ -15,8 +16,6 @@ def centerText(txt:str)->str:
     textoC = txt.center(terminal.columns)
     return textoC
 
-AZUL = '\033[94m'
-RESET = '\033[0m'
 def imprimirMensaje(msg: str, orientacion: str = 'derecha', porcentaje: int = 80) -> None:
     """funcion para darle formato a los emnsajes entre el usuario y el chatbot
 
@@ -40,7 +39,7 @@ def imprimirMensaje(msg: str, orientacion: str = 'derecha', porcentaje: int = 80
     if orientacion == 'derecha':
         justificar = str.rjust
         padding = 0
-        color = AZUL  # azul para usuario
+        color = c.AZUL  # azul para usuario
     else:
         justificar = str.ljust
         padding = terminal_size.columns - (ancho_burbuja + 4)
@@ -48,11 +47,11 @@ def imprimirMensaje(msg: str, orientacion: str = 'derecha', porcentaje: int = 80
         
 
     # Imprimir burbuja
-    print(' ' * padding + justificar(color + borde_superior + RESET, ancho_burbuja + 4))
+    print(' ' * padding + justificar(color + borde_superior + c.RESET, ancho_burbuja + 4))
     for linea in lineas:
         contenido = f"│ {linea.ljust(ancho_burbuja)} │"
-        print(' ' * padding + justificar(color + contenido + RESET, ancho_burbuja + 4))
-    print(' ' * padding + justificar(color + borde_inferior + RESET, ancho_burbuja + 4))
+        print(' ' * padding + justificar(color + contenido + c.RESET, ancho_burbuja + 4))
+    print(' ' * padding + justificar(color + borde_inferior + c.RESET, ancho_burbuja + 4))
 
 def login()->str:
     """mensaje para que el usuario ingrese su nombre
@@ -80,7 +79,7 @@ def chatMsg(n:str, conversation: list = [])-> None:
         question = str(input(f"{n}: "))
         if question.lower() == "salir":
             register(conversation, n)
-            print ("Saliendo del chatbot...")
+            print ("\nRegresando al menu principal...")
             return ("salir")
         answer, update = chat(question)
         conversation.extend(update)
@@ -136,6 +135,13 @@ def resumirConversacion(num:int, historial:list)-> None:
             cont += 1
 
 def continuarConversacion(nume:int, h:list, n:str)-> None:
+    """permite al usuario continuar con una conversacion guardada 
+
+    Args:
+        nume (int): numero de conversacion
+        h (list): historial de la conversacion 
+        n (str): nombre del usuario 
+    """
     cont = 1
     for e in h:
         if cont == nume:
@@ -157,7 +163,7 @@ def cargarHistorial(h:list, nombre:str)-> None:
         resumen = abstractConversation(c)
         print(f"{conta}. {resumen[:50]}...")
         conta+=1
-    print("Digite:\n1.Si desea ver el resumen de alguna conversacion\n2.Si desea continuar con alguna conversacion\n3.Si desea regresar al menu principal")
+    print("\n\nDigite:\n1.Si desea ver el resumen de alguna conversacion\n2.Si desea continuar con alguna conversacion\n3.Si desea regresar al menu principal")
     option = input("- ")
     match option:
         case "1":
@@ -176,8 +182,9 @@ def menu():
     name = login()
     history = openConversation(name)
     while True:
-        print("Bienvenido al chatbot\nOpciones\n\n1.Nueva Conversacion")
-        print("2.Ver historial de conversaciones\n3.Buscar por palabra")
+        print(centerText(f"{c.AZUL}Bienvenido al chatbot\n{c.RESET}"))
+        print(f"{c.AZUL}\nOpciones\n{c.RESET}")
+        print("1.Nueva Conversacion\n2.Ver historial de conversaciones\n3.Buscar por palabra")
         print("4.Salir")
         opcion = str(input("Seleccione una opcion:"))
         match opcion:
@@ -197,7 +204,7 @@ def menu():
                     if s == "salir":
                         break
             case "4":
-                print("¡Gracias por usar nuestro programa!")
+                print("\n¡Gracias por usar nuestro programa!")
                 exit()
 
 if __name__ == "__main__":
