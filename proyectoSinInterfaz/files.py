@@ -1,6 +1,6 @@
 #26032025 Yovelky Delgado // Andres Valerio
 from API import chat_con_php 
-import ast, os, json
+import os, json
 
 
 def openConversation(name:str)->list:
@@ -75,3 +75,6 @@ def lookForWord(wordKey:str, nombre:str)->list:
 def abstractConversation(conversacion:list)->str:
     abstract = chat_con_php(f"Haz un resumen de maximo 50 palabras de la siguiente conversacion: {conversacion}")
     return abstract
+
+def contextConversation(c:list):
+    answer = chat_con_php(f"Deseo continuar una conversacion basado en este contexto: {c}")
