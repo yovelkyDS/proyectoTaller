@@ -3,6 +3,14 @@ from files import openConversation, chat, lookForWord, abstractConversation, reg
 import sys
 
 def centerText(txt:str)->str:
+    """Funcion para mejorar la estetica del programa 
+
+    Args:
+        txt (str): texto a colocar
+
+    Returns:
+        str: devuelve el texto orientado en el centro de la terminal
+    """
     terminal = shutil.get_terminal_size()
     textoC = txt.center(terminal.columns)
     return textoC
@@ -10,6 +18,13 @@ def centerText(txt:str)->str:
 AZUL = '\033[94m'
 RESET = '\033[0m'
 def imprimirMensaje(msg: str, orientacion: str = 'derecha', porcentaje: int = 80) -> None:
+    """funcion para darle formato a los emnsajes entre el usuario y el chatbot
+
+    Args:
+        msg (str): mensaje del chatbot o del usuario
+        orientacion (str, optional): se orienta segun de quien sea el mensaje. Defaults to 'derecha'.
+        porcentaje (int, optional): porcentaje de la pantalla en el cual se mostrara el mensaje. Defaults to 80.
+    """
     terminal_size = shutil.get_terminal_size()
     anchoLinea = int(terminal_size.columns * porcentaje / 100)
 
@@ -40,12 +55,25 @@ def imprimirMensaje(msg: str, orientacion: str = 'derecha', porcentaje: int = 80
     print(' ' * padding + justificar(color + borde_inferior + RESET, ancho_burbuja + 4))
 
 def login()->str:
+    """mensaje para que el usuario ingrese su nombre
+
+    Returns:
+        str: dato ingresado por el usuario
+    """
     print(centerText("ChatBot"))
-    nombre = input("Escriba su nombre de usuario, incluyendo la primer letra de su apellido: ")
+    nombre = input("Escriba su nombre, incluyendo la primer letra de su apellido: ")
     return nombre
 
-def chatMsg(n:str):
-    conversation = []
+def chatMsg(n:str, conversation: list = [])-> None:
+    """permite al usuario establecer una conversacion con el chatbot 
+
+    Args:
+        n (str): nombre para buscar el archivo en el cual se guardara la conversacion
+
+    Returns:
+        _type_: no posee un retorno 
+    """
+    #conversation = []
     print(centerText("ChatBot"))
     imprimirMensaje("¡Hola! En que puedo ayudarte?", 'izquierda')
     while True:
@@ -61,7 +89,12 @@ def chatMsg(n:str):
         imprimirMensaje(question, 'derecha')
         imprimirMensaje(answer, 'izquierda')  
 
-def buscarPalabra(n:str):
+def buscarPalabra(n:str)-> None:
+    """permite buscar mediante una palabra en la lista de conversaciones guardadas en el archivo 
+
+    Args:
+        n (str): nombre del usuario propietario del archivo 
+    """
     palabraClave = str(input("Digite la palabra a buscar: "))
     results = lookForWord(palabraClave, n)
     print(results)
@@ -86,7 +119,13 @@ def buscarPalabra(n:str):
     else:
         print("No se encontraron coincidencias.")
 
-def resumirConversacion(num:int, historial:list):
+def resumirConversacion(num:int, historial:list)-> None:
+    """Genera un resumen de una conversacion especifica que el usuario desee 
+
+    Args:
+        num (int): numero de conversacion que se desea resumir 
+        historial (list): historial de conversaciones entre el chatbot y el usuario
+    """
     cont = 1
     for e in historial:
         if cont == num:
@@ -96,15 +135,22 @@ def resumirConversacion(num:int, historial:list):
         else:
             cont += 1
 
-def continuarConversacion(nume:int, h:list):
+def continuarConversacion(nume:int, h:list, n:str)-> None:
     cont = 1
     for e in h:
         if cont == nume:
             contextConversation(e)
-        else:
-            cont+=1
+            chatMsg(n, e)
+            break
+        cont += 1
 
-def cargarHistorial(h:list):
+def cargarHistorial(h:list, nombre:str)-> None:
+    """Muestra el historial guardado de conversaciones entre el usuario y el chatbot, y permite al usuario continuar con una conversacion o ver el resumen de la misma 
+
+    Args:
+        h (list): historial de conversaciones guardadas
+        nombre (str): nombre del usuario
+    """
     h.reverse()
     conta=1
     for c in h:
@@ -119,14 +165,16 @@ def cargarHistorial(h:list):
             resumirConversacion(numC, h)
         case "2":
             numC = int(input("Digite el numero de la conversacion con la que desea continuar: "))
-            continuarConversacion(numC, h)
+            continuarConversacion(numC, h, nombre)
         case "3":
-            menu()
+            return("salir")
 
 def menu():
+    """menu principal del sistema, le muestra al usuario las principales funciones que posee el sistema y le permite ingresar a los submenus de las mismas o bien,
+    salir del sistema 
+    """
     name = login()
     history = openConversation(name)
-    print(history)
     while True:
         print("Bienvenido al chatbot\nOpciones\n\n1.Nueva Conversacion")
         print("2.Ver historial de conversaciones\n3.Buscar por palabra")
@@ -135,15 +183,18 @@ def menu():
         match opcion:
             case "1":
                 while True:
-                    s= chatMsg(name.lower())
-                    if s.lower() == "salir":
+                    s = chatMsg(name)
+                    if s == "salir":
                         break
             case "2":
-                cargarHistorial(history)
+                while True:
+                    s = cargarHistorial(history, name)
+                    if s == "salir":
+                        break
             case "3":
                 while True:
-                    s = buscarPalabra(name.lower())
-                    if s.lower() == "salir":
+                    s = buscarPalabra(name)
+                    if s == "salir":
                         break
             case "4":
                 print("¡Gracias por usar nuestro programa!")
